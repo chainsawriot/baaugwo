@@ -2,6 +2,8 @@
 
 The goal of baaugwo is to archive an R package from CRAN into either a tibble or a SQLite table.
 
+baaugwo (包裹) is the cantonese pronounciation of the word 'package'.
+
 ## Installation
 
 
