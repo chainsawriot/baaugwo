@@ -25,7 +25,7 @@ read_src <- function(filename, pkg, cran_tempdir, verbose = FALSE) {
 #' @param verbose boolean, display debug info.
 #' @return a tibble with the source code of all R files, DESCRIPTION and NAMESPACE
 #' @export
-fetch_pkg_src <- function(pkg, verbose = FALSE) {
+read_cranpkg <- function(pkg, verbose = FALSE) {
     cran_tempdir <- tempdir()
     res <- download.packages(pkg, destdir = cran_tempdir)
     z <- untar(res[2], exdir = cran_tempdir)
@@ -39,7 +39,7 @@ fetch_pkg_src <- function(pkg, verbose = FALSE) {
 #' More information later.
 #' 
 #' @export
-dump_pkg_src_db <- function(pkg, dbname) {
+dump_cranpkg <- function(pkg, dbname) {
     db <- dbConnect(SQLite(), dbname = dbname)
     pkg_sources <- fetch_pkg_src(pkg)
     dbWriteTable(conn = db, name = 'code', value = pkg_sources,  append = TRUE)

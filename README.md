@@ -4,8 +4,9 @@ The goal of baaugwo is to archive an R package from CRAN into either a tibble or
 
 baaugwo (包裹) is the cantonese pronounciation of the word 'package'.
 
-## Installation
+The current version read only the DESCRIPTION, NAMESPACE, and all .R files in the /R directory. 
 
+## Installation
 
 ``` r
 install_github("chainsawriot/baaugwo")
@@ -16,5 +17,5 @@ install_github("chainsawriot/baaugwo")
 This is a basic example which shows you how to solve a common problem:
 
 ``` r
-baaugwo::fetch_pkg_src('rio')
+baaugwo::read_cranpkg('rio')
 ```
