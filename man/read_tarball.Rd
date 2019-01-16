@@ -15,5 +15,5 @@ read_tarball(tarball_path, verbose = FALSE)
 a tibble with the source code of all R files, DESCRIPTION and NAMESPACE
 }
 \description{
-This function fetches the source code of a package from CRAN and dump them into a tibble.
+This function dump the content of a tarball containing an R package into a tibble.
 }

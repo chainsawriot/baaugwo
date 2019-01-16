@@ -2,6 +2,7 @@
 
 export(read_cranpkg)
 export(read_tarball)
+export(read_tarball_meta)
 import(dplyr)
 import(purrr)
 import(tibble)

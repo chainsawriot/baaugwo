@@ -43,7 +43,7 @@ read_cranpkg <- function(pkg, verbose = FALSE) {
 
 #' Dump the source from a package tarball into a tibble
 #'
-#' This function fetches the source code of a package from CRAN and dump them into a tibble.
+#' This function dump the content of a tarball containing an R package into a tibble.
 #' 
 #' @param tarball_path string, path to a tarball in .tar.gz.
 #' @param verbose boolean, display debug info.
@@ -56,4 +56,19 @@ read_tarball <- function(tarball_path, verbose = FALSE) {
     pkg_name <- as.character(parsed_description[,1]) ## this doesn't feel safe.
     pkg_sources <- map_dfr(target_files_paths, read_src, pkg_name = pkg_name, verbose = verbose)
     return(pkg_sources)
+}
+
+#' Extract package name from tarball
+#'
+#' This function returns the package name from a tarball containing an R package.
+#' 
+#' @param tarball_path string, path to a tarball in .tar.gz.
+#' @param verbose boolean, display debug info.
+#' @return package name
+#' @export
+read_tarball_meta <- function(tarball_path) {
+    extracted_files_paths <- untar_pkg(tarball_path)
+    parsed_description <- read.dcf(grep(extracted_files_paths, pattern = "/DESCRIPTION$", value = TRUE))
+    pkg_name <- as.character(parsed_description[,1]) ## this doesn't feel safe.
+    return(pkg_name)
 }
