@@ -52,8 +52,7 @@ read_cranpkg <- function(pkg, verbose = FALSE) {
 read_tarball <- function(tarball_path, verbose = FALSE) {
     extracted_files_paths <- untar_pkg(tarball_path)
     target_files_paths <- grep(extracted_files_paths, pattern = '/R/.+\\.[rR]$|/DESCRIPTION$|/NAMESPACE$', value = TRUE)
-    parsed_description <- read.dcf(grep(target_files_paths, pattern = "/DESCRIPTION$", value = TRUE))
-    pkg_name <- as.character(parsed_description[,1]) ## this doesn't feel safe.
+    pkg_name <- extract_description(extracted_files_paths)
     pkg_sources <- map_dfr(target_files_paths, read_src, pkg_name = pkg_name, verbose = verbose)
     return(pkg_sources)
 }
@@ -68,7 +67,12 @@ read_tarball <- function(tarball_path, verbose = FALSE) {
 #' @export
 read_tarball_meta <- function(tarball_path) {
     extracted_files_paths <- untar_pkg(tarball_path)
-    parsed_description <- read.dcf(grep(extracted_files_paths, pattern = "/DESCRIPTION$", value = TRUE))
-    pkg_name <- as.character(parsed_description[,1]) ## this doesn't feel safe.
-    return(pkg_name)
+    return(extract_description(extracted_files_paths))
+}
+
+extract_description <- function(extracted_files_paths, field = 'Package') {
+    target_files_paths <- grep(extracted_files_paths, pattern = '/R/.+\\.[rR]$|/DESCRIPTION$|/NAMESPACE$', value = TRUE)
+    des_path <- grep(target_files_paths, pattern = "/DESCRIPTION$", value = TRUE)
+    parsed_description <- read.dcf(des_path, field = field)
+    return(as.character(parsed_description[,1]))
 }
