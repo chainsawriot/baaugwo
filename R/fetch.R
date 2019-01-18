@@ -70,7 +70,7 @@ read_tarball_meta <- function(tarball_path) {
     return(extract_description(extracted_files_paths))
 }
 
-extract_description <- function(extracted_files_paths, field = 'Package') {
+extract_description <- function(extracted_files_paths, field = c('Package', 'Bundle')) {
     target_files_paths <- grep(extracted_files_paths, pattern = '/R/.+\\.[rR]$|/DESCRIPTION$|/NAMESPACE$', value = TRUE)
     des_path <- grep(target_files_paths, pattern = "/DESCRIPTION$", value = TRUE)
     parsed_description <- read.dcf(des_path, field = field)
