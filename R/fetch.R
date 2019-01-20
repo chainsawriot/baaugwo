@@ -77,6 +77,11 @@ extract_description <- function(extracted_files_paths, field = c('Package', 'Bun
     if (length(des_path) > 1) {
         des_path <- des_path[which.min(nchar(des_path))]
     }
+    ## Some weird packages have NO DESCRITPTION files (e.g. leaps/leaps_1.0-3.tar.gz)
+    if (length(des_path) == 0) {
+        warnings("No DESCRIPTION file in the tarball.")
+        return(NA)
+    }
     read_dcf(des_path, field = field)
 }
 
