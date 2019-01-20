@@ -47,13 +47,17 @@ read_cranpkg <- function(pkg, verbose = FALSE) {
 #' 
 #' @param tarball_path string, path to a tarball in .tar.gz.
 #' @param verbose boolean, display debug info.
+#' @param clean_up boolean, remove extracted files.
 #' @return a tibble with the source code of all R files, DESCRIPTION and NAMESPACE
 #' @export
-read_tarball <- function(tarball_path, verbose = FALSE) {
+read_tarball <- function(tarball_path, verbose = FALSE, clean_up = TRUE) {
     extracted_files_paths <- untar_pkg(tarball_path)
     target_files_paths <- grep(extracted_files_paths, pattern = '/R/.+\\.[rR]$|/DESCRIPTION$|/NAMESPACE$', value = TRUE)
     pkg_name <- extract_description(extracted_files_paths)
     pkg_sources <- map_dfr(target_files_paths, read_src, pkg_name = pkg_name, verbose = verbose)
+    if (clean_up) {
+        clean_up(extracted_files_paths)
+    }
     return(pkg_sources)
 }
 
@@ -97,4 +101,9 @@ read_dcf <- function(file, fields) {
         des_content <- readLines(file)
         sub(" ", "", sub("^[^ ]+","",  grep(paste(fields, collapse = "|"), des_content, value = TRUE)))
     })
+}
+
+clean_up <- function(extracted_files_paths) {
+    sapply(extracted_files_paths, unlink, force = TRUE)
+    return(TRUE)
 }
