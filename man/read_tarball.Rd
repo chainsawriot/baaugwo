@@ -4,12 +4,14 @@
 \alias{read_tarball}
 \title{Dump the source from a package tarball into a tibble}
 \usage{
-read_tarball(tarball_path, verbose = FALSE)
+read_tarball(tarball_path, verbose = FALSE, clean_up = TRUE)
 }
 \arguments{
 \item{tarball_path}{string, path to a tarball in .tar.gz.}
 
 \item{verbose}{boolean, display debug info.}
+
+\item{clean_up}{boolean, remove extracted files.}
 }
 \value{
 a tibble with the source code of all R files, DESCRIPTION and NAMESPACE
