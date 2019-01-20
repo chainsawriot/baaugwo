@@ -77,10 +77,19 @@ extract_description <- function(extracted_files_paths, field = c('Package', 'Bun
     if (length(des_path) > 1) {
         des_path <- des_path[which.min(nchar(des_path))]
     }
-    parsed_description <- read.dcf(des_path, field = field)
-    if (!is.na(as.character(parsed_description[,1]))) {
-        return(as.character(parsed_description[,1]))
-    } else {
-        return(as.character(parsed_description[,2]))
-    }
+    read_dcf(des_path, field = field)
+}
+
+read_dcf <- function(file, fields) {
+    tryCatch({
+        parsed_description <- read.dcf(des_path, field = field)
+        if (!is.na(as.character(parsed_description[,1]))) {
+            return(as.character(parsed_description[,1]))
+        } else {
+            return(as.character(parsed_description[,2]))
+        }
+    }, error = function(e) {
+        des_content <- readLines(file)
+        sub(" ", "", sub("^[^ ]+","",  grep(paste(fields, collapse = "|"), des_content, value = TRUE)))
+    })
 }
