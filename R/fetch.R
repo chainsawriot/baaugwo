@@ -82,7 +82,7 @@ extract_description <- function(extracted_files_paths, field = c('Package', 'Bun
 
 read_dcf <- function(file, fields) {
     tryCatch({
-        parsed_description <- read.dcf(des_path, field = field)
+        parsed_description <- read.dcf(file, field = fields)
         if (!is.na(as.character(parsed_description[,1]))) {
             return(as.character(parsed_description[,1]))
         } else {
