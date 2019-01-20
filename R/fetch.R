@@ -73,7 +73,11 @@ read_tarball_meta <- function(tarball_path) {
 extract_description <- function(extracted_files_paths, field = c('Package', 'Bundle')) {
     target_files_paths <- grep(extracted_files_paths, pattern = '/R/.+\\.[rR]$|/DESCRIPTION$|/NAMESPACE$', value = TRUE)
     des_path <- grep(target_files_paths, pattern = "/DESCRIPTION$", value = TRUE)
-    parsed_description <- read.dcf(des_path[1], field = field)
+    ## Some weird packages have two DESCRIPTION files.
+    if (length(des_path) > 1) {
+        des_path <- des_path[which.min(nchar(des_path))]
+    }
+    parsed_description <- read.dcf(des_path, field = field)
     if (!is.na(as.character(parsed_description[,1]))) {
         return(as.character(parsed_description[,1]))
     } else {
