@@ -69,12 +69,12 @@ read_tarball <- function(tarball_path, verbose = FALSE, clean_up = TRUE) {
 #' @param field vector of fields to extract. By default, this function extracts package name.
 #' @return field values
 #' @export
-read_tarball_meta <- function(tarball_path, field = c('Package', 'Bundle')) {
+read_tarball_meta <- function(tarball_path, fields = c('Package', 'Bundle')) {
     extracted_files_paths <- untar_pkg(tarball_path)
     return(extract_description(extracted_files_paths, fields = fields))
 }
 
-extract_description <- function(extracted_files_paths, field = c('Package', 'Bundle')) {
+extract_description <- function(extracted_files_paths, fields = c('Package', 'Bundle')) {
     target_files_paths <- grep(extracted_files_paths, pattern = '/R/.+\\.[rR]$|/DESCRIPTION$|/NAMESPACE$', value = TRUE)
     des_path <- grep(target_files_paths, pattern = "/DESCRIPTION$", value = TRUE)
     ## Some weird packages have two DESCRIPTION files.
@@ -86,7 +86,7 @@ extract_description <- function(extracted_files_paths, field = c('Package', 'Bun
         warnings("No DESCRIPTION file in the tarball.")
         return(NA)
     }
-    read_dcf(des_path, field = field)
+    read_dcf(des_path, fields = fields)
 }
 
 read_dcf <- function(file, fields) {

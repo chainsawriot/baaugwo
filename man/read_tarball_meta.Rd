@@ -4,7 +4,7 @@
 \alias{read_tarball_meta}
 \title{Extract fields from tarball}
 \usage{
-read_tarball_meta(tarball_path, field = c("Package", "Bundle"))
+read_tarball_meta(tarball_path, fields = c("Package", "Bundle"))
 }
 \arguments{
 \item{tarball_path}{string, path to a tarball in .tar.gz.}
