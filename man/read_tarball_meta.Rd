@@ -2,17 +2,17 @@
 % Please edit documentation in R/fetch.R
 \name{read_tarball_meta}
 \alias{read_tarball_meta}
-\title{Extract package name from tarball}
+\title{Extract fields from tarball}
 \usage{
-read_tarball_meta(tarball_path)
+read_tarball_meta(tarball_path, field = c("Package", "Bundle"))
 }
 \arguments{
 \item{tarball_path}{string, path to a tarball in .tar.gz.}
 
-\item{verbose}{boolean, display debug info.}
+\item{field}{vector of fields to extract. By default, this function extracts package name.}
 }
 \value{
-package name
+field values
 }
 \description{
 This function returns the package name from a tarball containing an R package.

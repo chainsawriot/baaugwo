@@ -61,17 +61,17 @@ read_tarball <- function(tarball_path, verbose = FALSE, clean_up = TRUE) {
     return(pkg_sources)
 }
 
-#' Extract package name from tarball
+#' Extract fields from tarball
 #'
 #' This function returns the package name from a tarball containing an R package.
 #' 
 #' @param tarball_path string, path to a tarball in .tar.gz.
-#' @param verbose boolean, display debug info.
-#' @return package name
+#' @param field vector of fields to extract. By default, this function extracts package name.
+#' @return field values
 #' @export
-read_tarball_meta <- function(tarball_path) {
+read_tarball_meta <- function(tarball_path, field = c('Package', 'Bundle')) {
     extracted_files_paths <- untar_pkg(tarball_path)
-    return(extract_description(extracted_files_paths))
+    return(extract_description(extracted_files_paths, fields = fields))
 }
 
 extract_description <- function(extracted_files_paths, field = c('Package', 'Bundle')) {
